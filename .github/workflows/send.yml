@@ -1,0 +1,21 @@
+name : send
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version'
+        required: true
+        default: '1.0.0'
+
+jobs:
+  send_version:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send Version
+        uses: peter-evans/repository-dispatch@v1
+        with:
+          token: ${{ secrets.REPO_ACCESS_TOKEN }}
+          repository: steviemul/repository_dispatch_receive
+          event-type: new-version-available
+          client-payload: '{"version": "${{ github.event.inputs.version }}"}'
