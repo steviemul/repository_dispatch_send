@@ -19,3 +19,14 @@ jobs:
           repository: steviemul/repository_dispatch_receive
           event-type: new-version-available
           client-payload: '{"version": "${{ github.event.inputs.version }}"}'
+
+  send_version-master:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send Version
+        uses: peter-evans/repository-dispatch@v1
+        with:
+          token: ${{ secrets.REPO_ACCESS_TOKEN }}
+          repository: steviemul/repository_dispatch_receive
+          event-type: new-version-available-master
+          client-payload: '{"version": "${{ github.event.inputs.version }}"}'
